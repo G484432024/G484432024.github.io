@@ -1,162 +1,246 @@
 <!DOCTYPE html>
-<!-- oss-template-2026:placeholder （この目印で，scripts/check.sh が「準備中」のページかどうかを見分けます） -->
-<!--
-  テンプレートの「準備中」のページです．
-  このページが https://ユーザー名.github.io/ に表示されたら，GitHub Pages の設定は成功です．
-  第7回の実習4で，このファイルを第6回で作った index.html に置きかえます．
--->
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>準備中</title>
-  <style>
-    /* ===== 色の設定 ===== */
-    :root {
-      --main-color: #2e7d32;  /* メインの色（見出し・番号） */
-      --bg-color: #f5f8f5;    /* ページの背景の色 */
-      --card-color: #ffffff;  /* カードの背景の色 */
-      --text-color: #222222;  /* 文字の色 */
-      --sub-color: #666666;   /* 補足の文字の色 */
-      --line-color: #dfe6df;  /* 区切り線の色 */
-    }
+    <!-- 文字コードをUTF-8に指定 -->
+    <meta charset="UTF-8">
+    <!-- スマートフォンなどの端末でも見やすいように画面幅を調整 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ブラウザのタブに表示されるタイトル -->
+    <title>かまたのポートフォリオ</title>
 
-    /* パソコンやスマートフォンがダークモードのときの色 */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --main-color: #81c784;
-        --bg-color: #121512;
-        --card-color: #1e231e;
-        --text-color: #e8ece8;
-        --sub-color: #a0a8a0;
-        --line-color: #2f362f;
-      }
-    }
+    <style>
+        /* 
+         * 全体のリセットと基本設定 
+         * 余白をなくし、要素のサイズ計算を直感的にする
+         */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* ページ全体：カードを画面のまんなかに置く */
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
-      box-sizing: border-box;
-      font-family: "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
-      line-height: 1.8;
-      color: var(--text-color);
-      background: var(--bg-color);
-    }
+        /* 
+         * ページ全体のデザイン設定
+         * 「目立つかっこいい雰囲気」に合わせて、背景を黒、文字を白系のダークテーマに設定
+         */
+        body {
+            background-color: #0f0f13; /* 深い黒の背景色 */
+            color: #e0e0e0; /* 読みやすい明るいグレーの文字色 */
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
 
-    /* まんなかのカード */
-    main {
-      width: 100%;
-      max-width: 600px;
-      padding: 32px 28px;
-      background: var(--card-color);
-      border-top: 6px solid var(--main-color);
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    }
+        /* 
+         * メインコンテンツを囲む枠の設定
+         * パソコンでもスマホでも画面の中央に配置し、最大幅を制限する
+         */
+        .container {
+            max-width: 800px;
+            margin: 0 auto; /* 中央揃え */
+        }
 
-    h1 {
-      margin: 0 0 4px;
-      font-size: clamp(1.3rem, 6vw, 1.6rem);  /* スマートフォンでは少し小さくする */
-      line-height: 1.4;
-      color: var(--main-color);
-    }
+        /* 
+         * ヘッダー（一番上の名前とキャッチコピー）の設定
+         * 目立つようにネオン風の装飾を適用
+         */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #00ffcc; /* かっこいいネオンブルーの線 */
+            box-shadow: 0 10px 20px -10px rgba(0, 255, 204, 0.3); /* 光る影の効果 */
+        }
 
-    h2 {
-      margin: 28px 0 8px;
-      padding-bottom: 4px;
-      font-size: 1.05rem;
-      border-bottom: 1px solid var(--line-color);
-    }
+        /* 名前の設定（大きく、かっこよく光らせる） */
+        header h1 {
+            font-size: 2.5em;
+            color: #ffffff;
+            text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc; /* ネオンブルーの光彩 */
+            margin-bottom: 10px;
+        }
 
-    /* 「設定は成功」のバッジ */
-    .badge {
-      display: inline-block;
-      margin: 8px 0 0;
-      padding: 2px 12px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      color: var(--card-color);
-      background: var(--main-color);
-      border-radius: 999px;
-    }
+        /* キャッチコピーの設定 */
+        header p.catchphrase {
+            font-size: 1.2em;
+            color: #ff0055; /* アクセントとしてネオンピンクを使用 */
+            font-weight: bold;
+            letter-spacing: 2px; /* 文字の間隔を少し空ける */
+        }
 
-    /* 「次にやること」の番号つきリスト */
-    ol {
-      margin: 0;
-      padding-left: 1.4em;
-    }
-    li {
-      margin-bottom: 6px;
-    }
-    li::marker {
-      font-weight: bold;
-      color: var(--main-color);
-    }
+        /* 
+         * 各セクション（自己紹介の各項目）の共通設定
+         * 黒い背景に薄い枠線をつけ、カードのように浮かせる
+         */
+        section {
+            background-color: #1a1a24; /* 少し明るい黒 */
+            border: 1px solid #333; /* 暗いグレーの枠線 */
+            border-left: 5px solid #00ffcc; /* 左側に目立つ青い線を入れる */
+            border-radius: 8px; /* 角を少し丸くする */
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: transform 0.3s; /* マウスを乗せた時の動きを滑らかにする */
+        }
 
-    /* コマンドの見た目 */
-    code {
-      padding: 1px 6px;
-      font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 0.88em;
-      background: var(--bg-color);
-      border-radius: 4px;
-      white-space: nowrap;  /* コマンドの途中で折り返さない */
-    }
+        /* セクションにマウスを乗せた時に少し上に浮くようなアニメーション */
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 204, 0.2);
+        }
 
-    /* 補足の小さな文字 */
-    .sub {
-      font-size: 0.9rem;
-      color: var(--sub-color);
-    }
+        /* 各セクションの見出し（基本情報、趣味など）の設定 */
+        h2 {
+            font-size: 1.5em;
+            color: #00ffcc;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #444; /* 下に破線を引く */
+            padding-bottom: 5px;
+        }
 
-    /* いちばん下の小さな文字 */
-    footer {
-      margin-top: 28px;
-      padding-top: 12px;
-      font-size: 0.8rem;
-      color: var(--sub-color);
-      border-top: 1px solid var(--line-color);
-    }
-    a {
-      color: var(--main-color);
-    }
-  </style>
+        /* 
+         * リスト（箇条書き）の設定
+         * デフォルトの点（・）を消して、独自のデザインにする
+         */
+        ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        /* リストの先頭にかっこいい記号（>）をつける */
+        ul li::before {
+            content: ">";
+            position: absolute;
+            left: 0;
+            color: #ff0055;
+            font-weight: bold;
+        }
+
+        /* 
+         * プログラミング経験のスキルタグ（バッジ風デザイン）
+         * 並べて表示し、目立つように囲む
+         */
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* タグとタグの隙間 */
+        }
+
+        .skill-tag {
+            background-color: transparent;
+            color: #00ffcc;
+            border: 1px solid #00ffcc;
+            padding: 5px 12px;
+            border-radius: 20px; /* 角を丸くする */
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        /* 文章（ひとことなど）の設定 */
+        p.text-content {
+            line-height: 1.8; /* 行間を広めにして読みやすくする */
+        }
+
+        /* 基本情報の表組み風デザイン */
+        .info-table {
+            display: table;
+            width: 100%;
+        }
+        .info-row {
+            display: table-row;
+        }
+        .info-header {
+            display: table-cell;
+            font-weight: bold;
+            color: #888;
+            padding-right: 20px;
+            padding-bottom: 10px;
+            width: 80px;
+        }
+        .info-data {
+            display: table-cell;
+            padding-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-  <main>
-    <h1>このサイトは準備中です</h1>
-    <p class="badge">GitHub Pages の設定 OK</p>
-    <p>このページが表示されていれば，あなたのリポジトリは正しく公開されています．
-      あとは，このページを自分のサイトに置きかえるだけです．</p>
 
-    <h2>次にやること</h2>
-    <ol>
-      <li>このリポジトリを，SSHのURLで <code>git clone</code> する</li>
-      <li><code>index.html</code> を，第6回で作ったサイトに置きかえる</li>
-      <li><code>bash scripts/check.sh</code> で，公開前のチェックをする</li>
-      <li><code>git add</code> → <code>git commit</code> → <code>git push origin main</code> する</li>
-      <li>数分待ってから，このページを再読み込みする</li>
-    </ol>
-    <p class="sub">再読み込みしても変わらないときは，強制再読み込み（Windows：Ctrl + F5，Mac：Command + Shift + R）を試しましょう．</p>
+    <!-- サイトの中身全体を囲むコンテナ -->
+    <div class="container">
 
-    <h2>公開する前に</h2>
-    <ul>
-      <li>本名のフルネーム・学籍番号・住所・電話番号・メールアドレスが入っていないか</li>
-      <li>自己紹介に書いていないことを，AIが付け足していないか</li>
-    </ul>
-    <p class="sub">このリポジトリは Public です．サイトだけでなく，ファイルの中身やコミットの履歴も，誰でも見ることができます．</p>
+        <!-- ヘッダー部分（名前とキャッチコピー） -->
+        <header>
+            <h1>かまた</h1>
+            <p class="catchphrase">多趣味です。</p>
+        </header>
 
-    <footer>
-      拓殖大学工学部『オープンソースソフトウェア』2026年度<br>
-      <a href="https://github.com/tomohitoy/oss-practice-2026/blob/main-07/chap07/README.md">第7回の資料</a>
-      ・
-      <a href="https://github.com/tomohitoy/oss-template-2026">テンプレート（tomohitoy/oss-template-2026）</a>
-    </footer>
-  </main>
+        <!-- 基本情報セクション -->
+        <section id="basic-info">
+            <h2>基本情報</h2>
+            <div class="info-table">
+                <div class="info-row">
+                    <div class="info-header">学年</div>
+                    <div class="info-data">3</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-header">所属</div>
+                    <div class="info-data">拓殖大学工学部情報工学科</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 趣味・好きなことセクション -->
+        <section id="hobbies">
+            <h2>趣味・好きなこと</h2>
+            <ul>
+                <li>車、バイク</li>
+                <li>二次元</li>
+                <li>スマホ（ガジェット）</li>
+                <li>仮面ライダー</li>
+                <li>DJ</li>
+            </ul>
+        </section>
+
+        <!-- プログラミング経験セクション -->
+        <section id="skills">
+            <h2>プログラミング経験</h2>
+            <!-- バッジ風のデザインでスキルを並べる -->
+            <div class="skill-tags">
+                <span class="skill-tag">Java</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">GO</span>
+                <span class="skill-tag">HTML / CSS / JS</span>
+                <span class="skill-tag">Hashkell</span>
+                <span class="skill-tag">Prolog</span>
+                <span class="skill-tag">SQL</span>
+            </div>
+        </section>
+
+        <!-- 学びたいことセクション -->
+        <section id="goals">
+            <h2>この授業で学びたいこと</h2>
+            <ul>
+                <li>Gitについて</li>
+                <li>OSSの基本・基礎</li>
+            </ul>
+        </section>
+
+        <!-- ひとことセクション -->
+        <section id="message">
+            <h2>ひとこと</h2>
+            <p class="text-content">
+                私は山形県出身者です。山形は若者が楽しめることはあまりないですが、観光としては良い場所がたくさんあります。<br>
+                蔵王スキー場や銀山温泉、山寺など有名です。<br>
+                私の出身市は歴史と牛肉で少し有名なところです。食べ物も美味しいので一度旅行に行ってみてください。
+            </p>
+        </section>
+
+    </div>
+
 </body>
 </html>
